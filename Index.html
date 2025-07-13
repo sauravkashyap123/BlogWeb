@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechBlog Pro - Professional Blogger Website</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #06b6d4;
+            --dark-color: #1e293b;
+            --light-color: #f8fafc;
+            --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+        }
+
+        /* Header Styles */
+        .navbar {
+            background: var(--gradient) !important;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: white !important;
+        }
+
+        .navbar-nav .nav-link {
+            color: rgba(255,255,255,0.9) !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: white !important;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--gradient);
+            color: white;
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="white" opacity="0.1"><path d="M0,0v46.29c47.79,22.4,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1049.93,4.75,1120,0v100H0V0z"/></svg>') repeat-x;
+            background-size: 1000px 100px;
+            animation: wave 10s linear infinite;
+        }
+
+        @keyframes wave {
+            0% { background-position-x: 0; }
+            100% { background-position-x: 1000px; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: slideInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            animation: slideInUp 1s ease-out 0.2s both;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Search Section */
+        .search-section {
+            background: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            border: 2px solid #e2e8f0;
+            border-radius: 50px;
+            padding: 1rem 3rem 1rem 1.5rem;
+            font-size: 1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--gradient);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        /* Category Filter */
+        .category-filter {
+            margin: 2rem 0;
+        }
+
+        .category-btn {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            color: var(--dark-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: var(--gradient);
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+
+        /* Blog Posts */
+        .blog-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+            height: 100%;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .blog-card:hover .blog-image {
+            transform: scale(1.05);
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+        }
+
+        .blog-category {
+            background: var(--gradient);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+
+        .blog-excerpt {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .read-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .read-more:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .sidebar h5 {
+            color: var(--dark-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .recent-post {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .recent-post:hover {
+            background: #f8fafc;
+            padding-left: 0.5rem;
+        }
+
+        .recent-post img {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-right: 1rem;
+        }
+
+        .recent-post-content h6 {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .recent-post-content small {
+            color: #64748b;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer h5 {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .footer a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: white;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            border: none;
+            border-radius: 25px;
+            padding: 0.75rem 2rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .blog-card {
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Modal Styles */
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+        }
+
+        .modal-header {
+            background: var(--gradient);
+            color: white;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+            padding: 0.75rem 1rem;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: #64748b;
+        }
+
+        .no-results i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #cbd5e1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-blog me-2"></i>TechBlog Pro
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#blogs">Blogs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#adminModal">
+                            <i class="fas fa-plus-circle me-1"></i>Add Post
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-content">
+                        <h1>Welcome to TechBlog Pro</h1>
+                        <p>Discover the latest in technology, programming, and digital innovation. Join thousands of readers who trust us for cutting-edge insights.</p>
+                        <a href="#blogs" class="btn btn-light btn-lg">
+                            <i class="fas fa-rocket me-2"></i>Explore Blogs
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="text-center">
+                        <i class="fas fa-laptop-code" style="font-size: 15rem; opacity: 0.1;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search for articles, tutorials, and more...">
+                <button class="search-btn" id="searchBtn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section id="blogs" class="py-5">
+        <div class="container">
+            <!-- Category Filter -->
+            <div class="category-filter text-center">
+                <a href="#" class="category-btn active" data-category="all">All</a>
+                <a href="#" class="category-btn" data-category="technology">Technology</a>
+                <a href="#" class="category-btn" data-category="programming">Programming</a>
+                <a href="#" class="category-btn" data-category="web-development">Web Development</a>
+                <a href="#" class="category-btn" data-category="mobile">Mobile</a>
+                <a href="#" class="category-btn" data-category="ai">AI & Machine Learning</a>
+                <a href="#" class="category-btn" data-category="cybersecurity">Cybersecurity</a>
+            </div>
+
+            <div class="row">
+                <!-- Blog Posts -->
+                <div class="col-lg-8">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Loading amazing content...</p>
+                    </div>
+                    
+                    <div id="blogPosts" class="row">
+                        <!-- Blog posts will be dynamically inserted here -->
+                    </div>
+                    
+                    <div class="no-results" id="noResults" style="display: none;">
+                        <i class="fas fa-search"></i>
+                        <h4>No Results Found</h4>
+                        <p>Try searching with different keywords or browse all posts.</p>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+                    <!-- Recent Posts -->
+                    <div class="sidebar">
+                        <h5><i class="fas fa-clock me-2"></i>Recent Posts</h5>
+                        <div id="recentPosts">
+                            <!-- Recent posts will be dynamically inserted here -->
+                        </div>
+                    </div>
+
+                    <!-- Categories -->
+                    <div class="sidebar">
+                        <h5><i class="fas fa-tags me-2"></i>Categories</h5>
+                        <div id="categoriesList">
+                            <!-- Categories will be dynamically inserted here -->
+                        </div>
+                    </div>
+
+                    <!-- Newsletter -->
+                    <div class="sidebar">
+                        <h5><i class="fas fa-envelope me-2"></i>Newsletter</h5>
+                        <p>Subscribe to get the latest updates delivered to your inbox.</p>
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Enter your email">
+                            <button class="btn btn-primary">Subscribe</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <h5>TechBlog Pro</h5>
+                    <p>Your trusted source for technology insights, programming tutorials, and digital innovation news.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#blogs">Blogs</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h5>Categories</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Technology</a></li>
+                        <li><a href="#">Programming</a></li>
+                        <li><a href="#">Web Development</a></li>
+                        <li><a href="#">Mobile Apps</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h5>Contact Info</h5>
+                    <p><i class="fas fa-envelope me-2"></i>info@techblogpro.com</p>
+                    <p><i class="fas fa-phone me-2"></i>+1 (555) 123-4567</p>
+                    <p><i class="fas fa-map-marker-alt me-2"></i>New York, NY 10001</p>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p>&copy; 2024 TechBlog Pro. All rights reserved. Made with <i class="fas fa-heart text-danger"></i> for tech enthusiasts.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Admin Modal -->
+    <div class="modal fade" id="adminModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-plus-circle me-2"></i>Add New Blog Post
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="blogForm">
+                        <div class="mb-3">
+                            <label for="blogTitle" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="blogTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="blogCategory" class="form-label">Category</label>
+                            <select class="form-control" id="blogCategory" required>
+                                <option value="">Select Category</option>
+                                <option value="technology">Technology</option>
+                                <option value="programming">Programming</option>
+                                <option value="web-development">Web Development</option>
+                                <option value="mobile">Mobile</option>
+                                <option value="ai">AI & Machine Learning</option>
+                                <option value="cybersecurity">Cybersecurity</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="blogImage" class="form-label">Image URL</label>
+                            <input type="url" class="form-control" id="blogImage" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="blogExcerpt" class="form-label">Excerpt</label>
+                            <textarea class="form-control" id="blogExcerpt" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="blogContent" class="form-label">Content</label>
+                            <textarea class="form-control" id="blogContent" rows="8" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="blogAuthor" class="form-label">Author</label>
+                            <input type="text" class="form-control" id="blogAuthor" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="publishBtn">
+                        <i class="fas fa-paper-plane me-2"></i>Publish Post
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Blog data storage
+        let blogPosts = [
+            {
+                id: 1,
+                title: "The Future of Artificial Intelligence in Web Development",
+                category: "ai",
+                image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=500&h=300&fit=crop",
+                excerpt: "Explore how AI is revolutionizing web development with automated coding, intelligent design systems, and enhanced user experiences.",
+                content: "Artificial Intelligence is transforming the landscape of web development in unprecedented ways. From automated code generation to intelligent design systems, AI is making development faster, more efficient, and more accessible to developers of all skill levels.",
+                author: "Sarah Johnson",
+                date: "2024-01-15",
+                readTime: "8 min read"
+            },
+            {
+                id: 2,
+                title: "Mastering React Hooks: A Complete Guide",
+                category: "programming",
+                image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=500&h=300&fit=crop",
+                excerpt: "Deep dive into React Hooks with practical examples, best practices, and advanced patterns for modern React development.",
+                content: "React Hooks have revolutionized how we write React components. This comprehensive guide covers everything from basic hooks like useState and useEffect to advanced patterns and custom hooks.",
+                author: "Mike Chen",
+                date: "2024-01-12",
+                readTime: "12 min read"
+            },
+            {
+                id: 3,
+                title: "Cybersecurity Best Practices for Modern Applications",
+                category: "cybersecurity",
+                image: "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=500&h=300&fit=crop",
+                excerpt: "Learn essential cybersecurity practices to protect your applications from modern threats and vulnerabilities.",
+                content: "In today's digital landscape, cybersecurity is more critical than ever. This article covers essential security practices, common vulnerabilities, and how to build secure applications from the ground up.",
+                author: "Alex Rodriguez",
+                date: "2024-01-10",
+                readTime: "10 min read"
+            },
+            {
+                id: 4,
+                title: "Building Responsive Web Applications with Bootstrap 5",
+                category: "web-development",
+                image: "https://images.unsplash.com/photo-1547658719-da2b51169166?w=500&h=300&fit=crop",
+                excerpt: "Master Bootstrap 5 to create beautiful, responsive web applications with modern design patterns and components.",
+                content: "Bootstrap 5 brings powerful new features and improvements to responsive web design. Learn how to leverage its grid system, components, and utilities to build stunning web applications.",
+                author: "Emma Wilson",
+                date: "2024-01-08",
+                readTime: "6 min read"
+            },
+            {
+                id: 5,
+                title: "Mobile App Development: Native vs Cross-Platform",
+                category: "mobile",
+                image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=500&h=300&fit=crop",
+                excerpt: "Compare native and cross-platform mobile development approaches to choose the best strategy for your next app.",
+                content: "Choosing between native and cross-platform development is crucial for mobile app success. This article breaks down the pros and cons of each approach with real-world examples.",
+                author: "David Kim",
+                date: "2024-01-05",
+                readTime: "9 min read"
+            },
+            {
+                id: 6,
+                title: "The Rise of Edge Computing in Modern Technology",
+                category: "technology",
+                image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=500&h=300&fit=crop",
+                excerpt: "Discover how edge computing is transforming data processing and enabling real-time applications across industries.",
+                content: "Edge computing is reshaping how we think about data processing and application deployment. Learn about its benefits, challenges, and real-world applications in this comprehensive overview.",
+                author: "Lisa Park",
+                date: "2024-01-03",
+                readTime: "7 min read"
+            }
+        ];
+
+        // DOM Elements
+        const blogPostsContainer = document.getElementById('blogPosts');
+        const recentPostsContainer = document.getElementById('recentPosts');
+        const categoriesListContainer = document.getElementById('categoriesList');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const publishBtn = document.getElementById('publishBtn');
+        const blogForm = document.getElementById('blogForm');
+        const loadingElement = document.querySelector('.loading');
+        const noResultsElement = document.getElementById('noResults');
+
+        // Initialize the blog
+        function initializeBlog() {
+            showLoading();
+            setTimeout(() => {
+                renderBlogPosts(blogPosts);
+                renderRecentPosts();
+                renderCategories();
+                hideLoading();
+            }, 1000);
+        }
+
+        // Show loading animation
+        function showLoading() {
+            loadingElement.style.display = 'block';
+            blogPostsContainer.style.display = 'none';
+            noResultsElement.style.display = 'none';
+        }
+
+        // Hide loading animation
+        function hideLoading() {
+            loadingElement.style.display = 'none';
+            blogPostsContainer.style.display = 'block';
+        }
+
+        // Render blog posts
+        function renderBlogPosts(posts) {
+            if (posts.length === 0) {
+                blogPostsContainer.innerHTML = '';
+                noResultsElement.style.display = 'block';
+                return;
+            }
+
+            noResultsElement.style.display = 'none';
+            blogPostsContainer.innerHTML = posts.map(post => `
+                <div class="col-md-12 mb-4">
+                    <div class="blog-card">
+                        <img src="${post.image}" alt="${post.title}" class="blog-image">
+                        <div class="blog-content">
+                            <span class="blog-category">${getCategoryName(post.category)}</span>
+                            <h4 class="blog-title">${post.title}</h4>
+                            <p class="blog-excerpt">${post.excerpt}</p>
+                            <div class="blog-meta">
+                                <span><i class="fas fa-user me-1"></i>${post.author}</span>
+                                <span><i class="fas fa-clock me-1"></i>${post.readTime}</span>
+                            </div>
+                            <div class="mt-3">
+                                <a href="#" class="read-more" onclick="openPost(${post.id})">
+                                    Read More <i class="fas fa-arrow-right ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render recent posts
+        function renderRecentPosts() {
+            const recentPosts = blogPosts.slice(0, 5);
+            recentPostsContainer.innerHTML = recentPosts.map(post => `
+                <div class="recent-post" onclick="openPost(${post.id})">
+                    <img src="${post.image}" alt="${post.title}">
+                    <div class="recent-post-content">
+                        <h6>${post.title}</h6>
+                        <small>${formatDate(post.date)}</small>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render categories
+        function renderCategories() {
+            const categories = [...new Set(blogPosts.map(post => post.category))];
+            const categoryCounts = {};
+            
+            categories.forEach(category => {
+                categoryCounts[category] = blogPosts.filter(post => post.category === category).length;
+            });
+
+            categoriesListContainer.innerHTML = categories.map(category => `
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <a href="#" class="category-link" data-category="${category}">
+                        ${getCategoryName(category)}
+                    </a>
+                    <span class="badge bg-primary">${categoryCounts[category]}</span>
+                </div>
+            `).join('');
+
+            // Add click listeners to category links
+            document.querySelectorAll('.category-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    filterByCategory(e.target.dataset.category);
+                });
+            });
+        }
+
+        // Get category display name
+        function getCategoryName(category) {
+            const categoryNames = {
+                'technology': 'Technology',
+                'programming': 'Programming',
+                'web-development': 'Web Development',
+                'mobile': 'Mobile',
+                'ai': 'AI & Machine Learning',
+                'cybersecurity': 'Cybersecurity'
+            };
+            return categoryNames[category] || category;
+        }
+
+        // Format date
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        }
+
+        // Filter posts by category
+        function filterByCategory(category) {
+            showLoading();
+            
+            setTimeout(() => {
+                // Update active category button
+                categoryBtns.forEach(btn => btn.classList.remove('active'));
+                document.querySelector(`[data-category="${category}"]`).classList.add('active');
+                
+                // Filter posts
+                const filteredPosts = category === 'all' ? blogPosts : blogPosts.filter(post => post.category === category);
+                renderBlogPosts(filteredPosts);
+                hideLoading();
+            }, 500);
+        }
+
+        // Search functionality
+        function searchPosts(query) {
+            showLoading();
+            
+            setTimeout(() => {
+                const filteredPosts = blogPosts.filter(post => 
+                    post.title.toLowerCase().includes(query.toLowerCase()) ||
+                    post.excerpt.toLowerCase().includes(query.toLowerCase()) ||
+                    post.author.toLowerCase().includes(query.toLowerCase()) ||
+                    post.category.toLowerCase().includes(query.toLowerCase())
+                );
+                renderBlogPosts(filteredPosts);
+                hideLoading();
+            }, 500);
+        }
+
+        // Open full post (placeholder function)
+        function openPost(postId) {
+            const post = blogPosts.find(p => p.id === postId);
+            if (post) {
+                alert(`Opening post: "${post.title}"\n\n${post.content}\n\nBy: ${post.author}\nDate: ${formatDate(post.date)}`);
+            }
+        }
+
+        // Add new blog post
+        function addBlogPost() {
+            const title = document.getElementById('blogTitle').value;
+            const category = document.getElementById('blogCategory').value;
+            const image = document.getElementById('blogImage').value;
+            const excerpt = document.getElementById('blogExcerpt').value;
+            const content = document.getElementById('blogContent').value;
+            const author = document.getElementById('blogAuthor').value;
+
+            if (!title || !category || !image || !excerpt || !content || !author) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            const newPost = {
+                id: blogPosts.length + 1,
+                title,
+                category,
+                image,
+                excerpt,
+                content,
+                author,
+                date: new Date().toISOString().split('T')[0],
+                readTime: Math.ceil(content.split(' ').length / 200) + ' min read'
+            };
+
+            blogPosts.unshift(newPost);
+            
+            // Clear form
+            blogForm.reset();
+            
+            // Close modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('adminModal'));
+            modal.hide();
+            
+            // Refresh displays
+            renderBlogPosts(blogPosts);
+            renderRecentPosts();
+            renderCategories();
+            
+            // Show success message
+            showSuccessMessage('Blog post published successfully!');
+        }
+
+        // Show success message
+        function showSuccessMessage(message) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'alert alert-success alert-dismissible fade show position-fixed';
+            alertDiv.style.cssText = 'top: 100px; right: 20px; z-index: 9999; min-width: 300px;';
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            document.body.appendChild(alertDiv);
+            
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 3000);
+        }
+
+        // Smooth scrolling for navigation links
+        function smoothScroll(target) {
+            document.querySelector(target).scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize blog
+            initializeBlog();
+            
+            // Category filter buttons
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    filterByCategory(e.target.dataset.category);
+                });
+            });
+            
+            // Search functionality
+            searchBtn.addEventListener('click', () => {
+                const query = searchInput.value.trim();
+                if (query) {
+                    searchPosts(query);
+                }
+            });
+            
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const query = searchInput.value.trim();
+                    if (query) {
+                        searchPosts(query);
+                    }
+                }
+            });
+            
+            // Clear search when input is empty
+            searchInput.addEventListener('input', (e) => {
+                if (e.target.value.trim() === '') {
+                    renderBlogPosts(blogPosts);
+                }
+            });
+            
+            // Publish button
+            publishBtn.addEventListener('click', addBlogPost);
+            
+            // Newsletter subscription
+            document.querySelector('.sidebar .btn-primary').addEventListener('click', function() {
+                const email = this.previousElementSibling.value;
+                if (email) {
+                    showSuccessMessage('Thank you for subscribing to our newsletter!');
+                    this.previousElementSibling.value = '';
+                } else {
+                    alert('Please enter a valid email address');
+                }
+            });
+            
+            // Smooth scrolling for navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = this.getAttribute('href');
+                    if (target !== '#' && document.querySelector(target)) {
+                        smoothScroll(target);
+                    }
+                });
+            });
+            
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.style.background = 'rgba(99, 102, 241, 0.95)';
+                } else {
+                    navbar.style.background = 'var(--gradient)';
+                }
+            });
+        });
+
+        // Add some sample interactions
+        function addSamplePosts() {
+            const samplePosts = [
+                {
+                    id: 7,
+                    title: "Advanced JavaScript Patterns and Techniques",
+                    category: "programming",
+                    image: "https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=500&h=300&fit=crop",
+                    excerpt: "Master advanced JavaScript patterns including closures, prototypes, and modern ES6+ features for better code organization.",
+                    content: "JavaScript is a powerful language with many advanced features. This article explores design patterns, functional programming concepts, and modern JavaScript techniques that will elevate your coding skills.",
+                    author: "John Doe",
+                    date: "2024-01-01",
+                    readTime: "15 min read"
+                },
+                {
+                    id: 8,
+                    title: "Cloud Computing: AWS vs Azure vs Google Cloud",
+                    category: "technology",
+                    image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=500&h=300&fit=crop",
+                    excerpt: "Compare the major cloud platforms and learn which one is best suited for your next project or enterprise needs.",
+                    content: "Cloud computing has revolutionized how we deploy and scale applications. This comprehensive comparison covers AWS, Azure, and Google Cloud Platform, helping you make informed decisions.",
+                    author: "Jane Smith",
+                    date: "2023-12-28",
+                    readTime: "11 min read"
+                }
+            ];
+            
+            blogPosts.push(...samplePosts);
+            renderBlogPosts(blogPosts);
+            renderRecentPosts();
+            renderCategories();
+        }
+
+        // Add sample posts after a delay
+        setTimeout(addSamplePosts, 2000);
+        // Add sample posts after a delay
+        
+        // Advanced search functionality with filters
+        function advancedSearch() {
+            const searchTerm = document.getElementById('searchInput').value.trim();
+            const selectedCategory = document.querySelector('.category-btn.active')?.dataset.category || 'all';
+            const sortBy = document.getElementById('sortBy')?.value || 'date';
+            
+            showLoading();
+            
+            setTimeout(() => {
+                let filteredPosts = blogPosts;
+                
+                // Apply search filter
+                if (searchTerm) {
+                    filteredPosts = filteredPosts.filter(post => 
+                        post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        post.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        post.content.toLowerCase().includes(searchTerm.toLowerCase())
+                    );
+                }
+                
+                // Apply category filter
+                if (selectedCategory !== 'all') {
+                    filteredPosts = filteredPosts.filter(post => post.category === selectedCategory);
+                }
+                
+                // Apply sorting
+                filteredPosts = sortPosts(filteredPosts, sortBy);
+                
+                renderBlogPosts(filteredPosts);
+                hideLoading();
+            }, 500);
+        }
+
+        // Sort posts function
+        function sortPosts(posts, sortBy) {
+            return [...posts].sort((a, b) => {
+                switch (sortBy) {
+                    case 'date':
+                        return new Date(b.date) - new Date(a.date);
+                    case 'title':
+                        return a.title.localeCompare(b.title);
+                    case 'author':
+                        return a.author.localeCompare(b.author);
+                    case 'readTime':
+                        return parseInt(a.readTime) - parseInt(b.readTime);
+                    default:
+                        return 0;
+                }
+            });
+        }
+
+        // Bookmark functionality
+        let bookmarkedPosts = JSON.parse(localStorage.getItem('bookmarkedPosts')) || [];
+
+        function toggleBookmark(postId) {
+            const index = bookmarkedPosts.indexOf(postId);
+            if (index > -1) {
+                bookmarkedPosts.splice(index, 1);
+                showSuccessMessage('Post removed from bookmarks');
+            } else {
+                bookmarkedPosts.push(postId);
+                showSuccessMessage('Post added to bookmarks');
+            }
+            localStorage.setItem('bookmarkedPosts', JSON.stringify(bookmarkedPosts));
+            updateBookmarkButtons();
+        }
+
+        function updateBookmarkButtons() {
+            document.querySelectorAll('.bookmark-btn').forEach(btn => {
+                const postId = parseInt(btn.dataset.postId);
+                const isBookmarked = bookmarkedPosts.includes(postId);
+                btn.innerHTML = isBookmarked ? '<i class="fas fa-bookmark"></i>' : '<i class="far fa-bookmark"></i>';
+                btn.classList.toggle('bookmarked', isBookmarked);
+            });
+        }
+
+        // Show bookmarked posts
+        function showBookmarkedPosts() {
+            const bookmarked = blogPosts.filter(post => bookmarkedPosts.includes(post.id));
+            if (bookmarked.length === 0) {
+                showSuccessMessage('No bookmarked posts found');
+                return;
+            }
+            renderBlogPosts(bookmarked);
+        }
+
+        // Pagination functionality
+        let currentPage = 1;
+        const postsPerPage = 4;
+
+        function renderPaginatedPosts(posts) {
+            const startIndex = (currentPage - 1) * postsPerPage;
+            const endIndex = startIndex + postsPerPage;
+            const paginatedPosts = posts.slice(startIndex, endIndex);
+            
+            renderBlogPosts(paginatedPosts);
+            renderPagination(posts.length);
+        }
+
+        function renderPagination(totalPosts) {
+            const totalPages = Math.ceil(totalPosts / postsPerPage);
+            const paginationContainer = document.getElementById('pagination');
+            
+            if (totalPages <= 1) {
+                paginationContainer.innerHTML = '';
+                return;
+            }
+            
+            let paginationHTML = '<nav><ul class="pagination justify-content-center">';
+            
+            // Previous button
+            paginationHTML += `
+                <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+                    <a class="page-link" href="#" onclick="changePage(${currentPage - 1})">Previous</a>
+                </li>
+            `;
+            
+            // Page numbers
+            for (let i = 1; i <= totalPages; i++) {
+                paginationHTML += `
+                    <li class="page-item ${i === currentPage ? 'active' : ''}">
+                        <a class="page-link" href="#" onclick="changePage(${i})">${i}</a>
+                    </li>
+                `;
+            }
+            
+            // Next button
+            paginationHTML += `
+                <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+                    <a class="page-link" href="#" onclick="changePage(${currentPage + 1})">Next</a>
+                </li>
+            `;
+            
+            paginationHTML += '</ul></nav>';
+            paginationContainer.innerHTML = paginationHTML;
+        }
+
+        function changePage(page) {
+            if (page < 1 || page > Math.ceil(blogPosts.length / postsPerPage)) return;
+            currentPage = page;
+            renderPaginatedPosts(blogPosts);
+            smoothScroll('#blogPosts');
+        }
+
+        // Comment system
+        let comments = JSON.parse(localStorage.getItem('blogComments')) || {};
+
+        function addComment(postId) {
+            const commentText = document.getElementById(`comment-${postId}`).value.trim();
+            const commenterName = document.getElementById(`commenter-${postId}`).value.trim();
+            
+            if (!commentText || !commenterName) {
+                alert('Please fill in both name and comment fields');
+                return;
+            }
+            
+            if (!comments[postId]) {
+                comments[postId] = [];
+            }
+            
+            const newComment = {
+                id: Date.now(),
+                name: commenterName,
+                text: commentText,
+                date: new Date().toISOString()
+            };
+            
+            comments[postId].push(newComment);
+            localStorage.setItem('blogComments', JSON.stringify(comments));
+            
+            // Clear form
+            document.getElementById(`comment-${postId}`).value = '';
+            document.getElementById(`commenter-${postId}`).value = '';
+            
+            renderComments(postId);
+            showSuccessMessage('Comment added successfully!');
+        }
+
+        function renderComments(postId) {
+            const postComments = comments[postId] || [];
+            const commentsContainer = document.getElementById(`comments-${postId}`);
+            
+            if (postComments.length === 0) {
+                commentsContainer.innerHTML = '<p class="text-muted">No comments yet. Be the first to comment!</p>';
+                return;
+            }
+            
+            commentsContainer.innerHTML = postComments.map(comment => `
+                <div class="comment mb-3 p-3 bg-light rounded">
+                    <div class="d-flex justify-content-between">
+                        <strong>${comment.name}</strong>
+                        <small class="text-muted">${formatDate(comment.date.split('T')[0])}</small>
+                    </div>
+                    <p class="mb-0 mt-2">${comment.text}</p>
+                </div>
+            `).join('');
+        }
+
+        // Share functionality
+        function sharePost(postId, platform) {
+            const post = blogPosts.find(p => p.id === postId);
+            if (!post) return;
+            
+            const url = window.location.href;
+            const title = post.title;
+            const text = post.excerpt;
+            
+            let shareUrl = '';
+            
+            switch (platform) {
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`;
+                    break;
+                case 'linkedin':
+                    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+                    break;
+                case 'whatsapp':
+                    shareUrl = `https://wa.me/?text=${encodeURIComponent(title + ' ' + url)}`;
+                    break;
+                case 'email':
+                    shareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(text + '\n\n' + url)}`;
+                    break;
+            }
+            
+            if (shareUrl) {
+                window.open(shareUrl, '_blank', 'width=600,height=400');
+            }
+        }
+
+        // Copy link functionality
+        function copyLink(postId) {
+            const url = window.location.href + '#post-' + postId;
+            navigator.clipboard.writeText(url).then(() => {
+                showSuccessMessage('Link copied to clipboard!');
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = url;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showSuccessMessage('Link copied to clipboard!');
+            });
+        }
+
+        // Reading progress indicator
+        function updateReadingProgress() {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            
+            const progressBar = document.getElementById('readingProgress');
+            if (progressBar) {
+                progressBar.style.width = scrollPercent + '%';
+            }
+        }
+
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode);
+            
+            const toggleBtn = document.getElementById('darkModeToggle');
+            toggleBtn.innerHTML = isDarkMode ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        }
+
+        // Initialize dark mode
+        function initializeDarkMode() {
+            const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+            if (savedDarkMode) {
+                document.body.classList.add('dark-mode');
+                const toggleBtn = document.getElementById('darkModeToggle');
+                if (toggleBtn) {
+                    toggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+                }
+            }
+        }
+
+        // Tag system
+        function addTagsToPost(postId, tags) {
+            const post = blogPosts.find(p => p.id === postId);
+            if (post) {
+                post.tags = tags;
+            }
+        }
+
+        function filterByTag(tag) {
+            const filteredPosts = blogPosts.filter(post => 
+                post.tags && post.tags.includes(tag)
+            );
+            renderBlogPosts(filteredPosts);
+        }
+
+        // Related posts functionality
+        function getRelatedPosts(currentPost, limit = 3) {
+            return blogPosts
+                .filter(post => post.id !== currentPost.id && post.category === currentPost.category)
+                .sort(() => Math.random() - 0.5)
+                .slice(0, limit);
+        }
+
+        // View counter
+        let viewCounts = JSON.parse(localStorage.getItem('postViews')) || {};
+
+        function incrementViewCount(postId) {
+            viewCounts[postId] = (viewCounts[postId] || 0) + 1;
+            localStorage.setItem('postViews', JSON.stringify(viewCounts));
+            updateViewCountDisplay(postId);
+        }
+
+        function updateViewCountDisplay(postId) {
+            const viewCountElement = document.getElementById(`views-${postId}`);
+            if (viewCountElement) {
+                viewCountElement.textContent = viewCounts[postId] || 0;
+            }
+        }
+
+        // Auto-save draft functionality
+        function autoSaveDraft() {
+            const formData = {
+                title: document.getElementById('blogTitle').value,
+                category: document.getElementById('blogCategory').value,
+                image: document.getElementById('blogImage').value,
+                excerpt: document.getElementById('blogExcerpt').value,
+                content: document.getElementById('blogContent').value,
+                author: document.getElementById('blogAuthor').value,
+                timestamp: new Date().toISOString()
+            };
+            
+            localStorage.setItem('blogDraft', JSON.stringify(formData));
+        }
+
+        function loadDraft() {
+            const draft = JSON.parse(localStorage.getItem('blogDraft'));
+            if (draft) {
+                document.getElementById('blogTitle').value = draft.title || '';
+                document.getElementById('blogCategory').value = draft.category || '';
+                document.getElementById('blogImage').value = draft.image || '';
+                document.getElementById('blogExcerpt').value = draft.excerpt || '';
+                document.getElementById('blogContent').value = draft.content || '';
+                document.getElementById('blogAuthor').value = draft.author || '';
+                
+                if (draft.timestamp) {
+                    showSuccessMessage('Draft loaded from ' + formatDate(draft.timestamp.split('T')[0]));
+                }
+            }
+        }
+
+        function clearDraft() {
+            localStorage.removeItem('blogDraft');
+            showSuccessMessage('Draft cleared');
+        }
+
+        // Enhanced blog post rendering with additional features
+        function renderBlogPostsEnhanced(posts) {
+            if (posts.length === 0) {
+                blogPostsContainer.innerHTML = '';
+                noResultsElement.style.display = 'block';
+                return;
+            }
+
+            noResultsElement.style.display = 'none';
+            blogPostsContainer.innerHTML = posts.map(post => `
+                <div class="col-md-12 mb-4">
+                    <div class="blog-card" id="post-${post.id}">
+                        <div class="blog-image-container">
+                            <img src="${post.image}" alt="${post.title}" class="blog-image">
+                            <div class="blog-overlay">
+                                <button class="btn btn-sm btn-light bookmark-btn" 
+                                        onclick="toggleBookmark(${post.id})" 
+                                        data-post-id="${post.id}">
+                                    <i class="far fa-bookmark"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="blog-content">
+                            <span class="blog-category">${getCategoryName(post.category)}</span>
+                            <h4 class="blog-title">${post.title}</h4>
+                            <p class="blog-excerpt">${post.excerpt}</p>
+                            <div class="blog-meta">
+                                <span><i class="fas fa-user me-1"></i>${post.author}</span>
+                                <span><i class="fas fa-clock me-1"></i>${post.readTime}</span>
+                                <span><i class="fas fa-eye me-1"></i><span id="views-${post.id}">${viewCounts[post.id] || 0}</span></span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <a href="#" class="read-more" onclick="openPost(${post.id})">
+                                    Read More <i class="fas fa-arrow-right ms-1"></i>
+                                </a>
+                                <div class="share-buttons">
+                                    <button class="btn btn-sm btn-outline-primary" onclick="sharePost(${post.id}, 'twitter')">
+                                        <i class="fab fa-twitter"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-primary" onclick="sharePost(${post.id}, 'facebook')">
+                                        <i class="fab fa-facebook"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-primary" onclick="copyLink(${post.id})">
+                                        <i class="fas fa-link"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            updateBookmarkButtons();
+        }
+
+        // Initialize enhanced features
+        function initializeEnhancedFeatures() {
+            // Auto-save draft every 30 seconds
+            setInterval(autoSaveDraft, 30000);
+            
+            // Reading progress
+            window.addEventListener('scroll', updateReadingProgress);
+            
+            // Initialize dark mode
+            initializeDarkMode();
+            
+            // Load draft on page load
+            loadDraft();
+        }
+
+        // Update the main initialization to use enhanced features
+        function initializeBlogEnhanced() {
+            showLoading();
+            setTimeout(() => {
+                renderBlogPostsEnhanced(blogPosts);
+                renderRecentPosts();
+                renderCategories();
+                initializeEnhancedFeatures();
+                hideLoading();
+            }, 1000);
+        }
+
+        // Replace the original initialization call
+        // initializeBlog(); // Comment out the original
+        // initializeBlogEnhanced(); // Use enhanced version instead
+        
+        </script>
